@@ -72,7 +72,7 @@ def createMapGoal(M):
       for col in range(M):
         point = Point(row, col)
         if o_map.contains(point):
-          m[row, col] = randint(1, 4)  # Assign random difficulty (1 to 5)
+          m[row, col] = randint(1, 4)
 
   # If no obstacles were added, generate some random obstacles
   if np.all(m == 0):
@@ -187,6 +187,16 @@ def createOutputVisualization(nodes,M,m):
   plt.imshow(y, cmap='viridis')
   plt.colorbar(label='Path Cost')
 
+# def createData(_):
+#   M = map_size
+#   m,g,goalcoord = createMapGoal(M)
+#   x = np.stack((m,g)) #creating the input 
+
+#   n = Dijkstra(m,goalcoord,M)
+#   y = getOutput(n,M)
+
+#   return (x,y,m,n)
+
 def createData(_):
     m, g, goal = createMapGoal(map_size)
     x = np.stack((m, g), axis=0)  # Shape: [2, map_size, map_size]
@@ -231,7 +241,7 @@ def main():
 
             plt.subplot(1, 3, 1)
             plt.title("Map")
-            plt.imshow(m, cmap='viridis', vmin=0, vmax=5)
+            plt.imshow(m, cmap='viridis', vmin=0, vmax=4)
             plt.colorbar(label='Difficulty Scale')
 
             plt.subplot(1, 3, 2)
@@ -250,23 +260,6 @@ def main():
 
     t2 = time.perf_counter()
     print(f'Finished in {t2-t1} seconds')  
-
-#   if mode=='v':
-#     with open(xfile + ".npz",'rb') as f1, open (yfile + ".npz",'rb') as f2:
-#       inx = np.load(f1)
-#       outy = np.load(f2)
-#       for i in range(10):
-#         a = inx['arr_' + str(i)]
-#         b = outy['arr_' + str(i)]
-#         createMapGoalVisualization(a[0],a[1])
-#         plt.subplot(133)
-#         plt.imshow(b, cmap='viridis')
-#         plt.colorbar(label='Path Cost')
-#         plt.savefig(os.path.join('Result', 'result_'+str(i)+ '.png'))
-#         plt.show()
-
-#   t2 = time.perf_counter()
-#   print(f'Finished in {t2-t1} seconds')
 
 if __name__ == '__main__':
   main()
